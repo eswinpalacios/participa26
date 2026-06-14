@@ -30,6 +30,7 @@ function AuthPage() {
   const [apellidos, setApellidos] = useState("");
   const [correo, setCorreo] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [regPwd, setRegPwd] = useState("");
   const [rol, setRol] = useState<"agente" | "consulta">("consulta");
 
   const ensureSeed = async () => {
