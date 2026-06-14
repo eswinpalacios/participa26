@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Youtube, ListChecks, Sparkles, Trophy, UserPlus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import heroImg from "@/assets/landing-hero.jpg";
 import communityImg from "@/assets/landing-community.jpg";
 import parkImg from "@/assets/landing-park.jpg";
@@ -23,6 +25,16 @@ const buttons = [
 ] as const;
 
 function Landing() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      setIsAuthenticated(!!data.session);
+    });
+  }, []);
+
+  const visibleButtons = buttons.filter((button) => button.to !== "/auth" || !isAuthenticated);
+
   return (
     <div className="relative">
       {/* Hero background */}
@@ -35,10 +47,10 @@ function Landing() {
         <p className="inline-block px-3 py-1 rounded-full bg-accent text-accent-foreground text-xs font-semibold mb-4">
           Municipalidad de Miraflores
         </p>
-        <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
-          PARTICIPA<span className="text-accent">+</span>
+        <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-black">
+          PARTICIPA<span className="text-black">+</span>
         </h1>
-        <p className="mt-3 text-lg opacity-90 max-w-2xl mx-auto">
+        <p className="mt-3 text-lg text-black max-w-2xl mx-auto">
           Plataforma del Presupuesto Participativo. Conoce, propón y vota los proyectos que transformarán nuestro distrito.
         </p>
       </section>
@@ -46,7 +58,7 @@ function Landing() {
       {/* Central buttons grid */}
       <section className="max-w-5xl mx-auto px-4 -mt-4 relative z-10">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {buttons.map((b) => {
+          {visibleButtons.map((b) => {
             const Icon = b.icon;
             return (
               <Link
