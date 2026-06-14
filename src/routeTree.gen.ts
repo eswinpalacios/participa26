@@ -9,61 +9,316 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedVideosRouteImport } from './routes/_authenticated/videos'
+import { Route as AuthenticatedHistoricosRouteImport } from './routes/_authenticated/historicos'
+import { Route as AuthenticatedDestacadosRouteImport } from './routes/_authenticated/destacados'
+import { Route as AuthenticatedCrearProyectoRouteImport } from './routes/_authenticated/crear-proyecto'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as ApiPublicSeedAdminRouteImport } from './routes/api/public/seed-admin'
+import { Route as AuthenticatedProyectoIdModulo3RouteImport } from './routes/_authenticated/proyecto.$id.modulo-3'
+import { Route as AuthenticatedProyectoIdModulo2RouteImport } from './routes/_authenticated/proyecto.$id.modulo-2'
+import { Route as AuthenticatedProyectoIdModulo1RouteImport } from './routes/_authenticated/proyecto.$id.modulo-1'
+import { Route as AuthenticatedProyectoIdFinalizarRouteImport } from './routes/_authenticated/proyecto.$id.finalizar'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedVideosRoute = AuthenticatedVideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedHistoricosRoute = AuthenticatedHistoricosRouteImport.update({
+  id: '/historicos',
+  path: '/historicos',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDestacadosRoute = AuthenticatedDestacadosRouteImport.update({
+  id: '/destacados',
+  path: '/destacados',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedCrearProyectoRoute =
+  AuthenticatedCrearProyectoRouteImport.update({
+    id: '/crear-proyecto',
+    path: '/crear-proyecto',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiPublicSeedAdminRoute = ApiPublicSeedAdminRouteImport.update({
+  id: '/api/public/seed-admin',
+  path: '/api/public/seed-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedProyectoIdModulo3Route =
+  AuthenticatedProyectoIdModulo3RouteImport.update({
+    id: '/proyecto/$id/modulo-3',
+    path: '/proyecto/$id/modulo-3',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProyectoIdModulo2Route =
+  AuthenticatedProyectoIdModulo2RouteImport.update({
+    id: '/proyecto/$id/modulo-2',
+    path: '/proyecto/$id/modulo-2',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProyectoIdModulo1Route =
+  AuthenticatedProyectoIdModulo1RouteImport.update({
+    id: '/proyecto/$id/modulo-1',
+    path: '/proyecto/$id/modulo-1',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedProyectoIdFinalizarRoute =
+  AuthenticatedProyectoIdFinalizarRouteImport.update({
+    id: '/proyecto/$id/finalizar',
+    path: '/proyecto/$id/finalizar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/crear-proyecto': typeof AuthenticatedCrearProyectoRoute
+  '/destacados': typeof AuthenticatedDestacadosRoute
+  '/historicos': typeof AuthenticatedHistoricosRoute
+  '/videos': typeof AuthenticatedVideosRoute
+  '/api/public/seed-admin': typeof ApiPublicSeedAdminRoute
+  '/proyecto/$id/finalizar': typeof AuthenticatedProyectoIdFinalizarRoute
+  '/proyecto/$id/modulo-1': typeof AuthenticatedProyectoIdModulo1Route
+  '/proyecto/$id/modulo-2': typeof AuthenticatedProyectoIdModulo2Route
+  '/proyecto/$id/modulo-3': typeof AuthenticatedProyectoIdModulo3Route
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/admin': typeof AuthenticatedAdminRoute
+  '/crear-proyecto': typeof AuthenticatedCrearProyectoRoute
+  '/destacados': typeof AuthenticatedDestacadosRoute
+  '/historicos': typeof AuthenticatedHistoricosRoute
+  '/videos': typeof AuthenticatedVideosRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/api/public/seed-admin': typeof ApiPublicSeedAdminRoute
+  '/proyecto/$id/finalizar': typeof AuthenticatedProyectoIdFinalizarRoute
+  '/proyecto/$id/modulo-1': typeof AuthenticatedProyectoIdModulo1Route
+  '/proyecto/$id/modulo-2': typeof AuthenticatedProyectoIdModulo2Route
+  '/proyecto/$id/modulo-3': typeof AuthenticatedProyectoIdModulo3Route
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
+  '/_authenticated/crear-proyecto': typeof AuthenticatedCrearProyectoRoute
+  '/_authenticated/destacados': typeof AuthenticatedDestacadosRoute
+  '/_authenticated/historicos': typeof AuthenticatedHistoricosRoute
+  '/_authenticated/videos': typeof AuthenticatedVideosRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/api/public/seed-admin': typeof ApiPublicSeedAdminRoute
+  '/_authenticated/proyecto/$id/finalizar': typeof AuthenticatedProyectoIdFinalizarRoute
+  '/_authenticated/proyecto/$id/modulo-1': typeof AuthenticatedProyectoIdModulo1Route
+  '/_authenticated/proyecto/$id/modulo-2': typeof AuthenticatedProyectoIdModulo2Route
+  '/_authenticated/proyecto/$id/modulo-3': typeof AuthenticatedProyectoIdModulo3Route
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/admin'
+    | '/crear-proyecto'
+    | '/destacados'
+    | '/historicos'
+    | '/videos'
+    | '/api/public/seed-admin'
+    | '/proyecto/$id/finalizar'
+    | '/proyecto/$id/modulo-1'
+    | '/proyecto/$id/modulo-2'
+    | '/proyecto/$id/modulo-3'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/auth'
+    | '/admin'
+    | '/crear-proyecto'
+    | '/destacados'
+    | '/historicos'
+    | '/videos'
+    | '/'
+    | '/api/public/seed-admin'
+    | '/proyecto/$id/finalizar'
+    | '/proyecto/$id/modulo-1'
+    | '/proyecto/$id/modulo-2'
+    | '/proyecto/$id/modulo-3'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/admin'
+    | '/_authenticated/crear-proyecto'
+    | '/_authenticated/destacados'
+    | '/_authenticated/historicos'
+    | '/_authenticated/videos'
+    | '/_authenticated/'
+    | '/api/public/seed-admin'
+    | '/_authenticated/proyecto/$id/finalizar'
+    | '/_authenticated/proyecto/$id/modulo-1'
+    | '/_authenticated/proyecto/$id/modulo-2'
+    | '/_authenticated/proyecto/$id/modulo-3'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiPublicSeedAdminRoute: typeof ApiPublicSeedAdminRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/videos': {
+      id: '/_authenticated/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof AuthenticatedVideosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/historicos': {
+      id: '/_authenticated/historicos'
+      path: '/historicos'
+      fullPath: '/historicos'
+      preLoaderRoute: typeof AuthenticatedHistoricosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/destacados': {
+      id: '/_authenticated/destacados'
+      path: '/destacados'
+      fullPath: '/destacados'
+      preLoaderRoute: typeof AuthenticatedDestacadosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/crear-proyecto': {
+      id: '/_authenticated/crear-proyecto'
+      path: '/crear-proyecto'
+      fullPath: '/crear-proyecto'
+      preLoaderRoute: typeof AuthenticatedCrearProyectoRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/seed-admin': {
+      id: '/api/public/seed-admin'
+      path: '/api/public/seed-admin'
+      fullPath: '/api/public/seed-admin'
+      preLoaderRoute: typeof ApiPublicSeedAdminRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/proyecto/$id/modulo-3': {
+      id: '/_authenticated/proyecto/$id/modulo-3'
+      path: '/proyecto/$id/modulo-3'
+      fullPath: '/proyecto/$id/modulo-3'
+      preLoaderRoute: typeof AuthenticatedProyectoIdModulo3RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/proyecto/$id/modulo-2': {
+      id: '/_authenticated/proyecto/$id/modulo-2'
+      path: '/proyecto/$id/modulo-2'
+      fullPath: '/proyecto/$id/modulo-2'
+      preLoaderRoute: typeof AuthenticatedProyectoIdModulo2RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/proyecto/$id/modulo-1': {
+      id: '/_authenticated/proyecto/$id/modulo-1'
+      path: '/proyecto/$id/modulo-1'
+      fullPath: '/proyecto/$id/modulo-1'
+      preLoaderRoute: typeof AuthenticatedProyectoIdModulo1RouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/proyecto/$id/finalizar': {
+      id: '/_authenticated/proyecto/$id/finalizar'
+      path: '/proyecto/$id/finalizar'
+      fullPath: '/proyecto/$id/finalizar'
+      preLoaderRoute: typeof AuthenticatedProyectoIdFinalizarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+  AuthenticatedCrearProyectoRoute: typeof AuthenticatedCrearProyectoRoute
+  AuthenticatedDestacadosRoute: typeof AuthenticatedDestacadosRoute
+  AuthenticatedHistoricosRoute: typeof AuthenticatedHistoricosRoute
+  AuthenticatedVideosRoute: typeof AuthenticatedVideosRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedProyectoIdFinalizarRoute: typeof AuthenticatedProyectoIdFinalizarRoute
+  AuthenticatedProyectoIdModulo1Route: typeof AuthenticatedProyectoIdModulo1Route
+  AuthenticatedProyectoIdModulo2Route: typeof AuthenticatedProyectoIdModulo2Route
+  AuthenticatedProyectoIdModulo3Route: typeof AuthenticatedProyectoIdModulo3Route
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+  AuthenticatedCrearProyectoRoute: AuthenticatedCrearProyectoRoute,
+  AuthenticatedDestacadosRoute: AuthenticatedDestacadosRoute,
+  AuthenticatedHistoricosRoute: AuthenticatedHistoricosRoute,
+  AuthenticatedVideosRoute: AuthenticatedVideosRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedProyectoIdFinalizarRoute: AuthenticatedProyectoIdFinalizarRoute,
+  AuthenticatedProyectoIdModulo1Route: AuthenticatedProyectoIdModulo1Route,
+  AuthenticatedProyectoIdModulo2Route: AuthenticatedProyectoIdModulo2Route,
+  AuthenticatedProyectoIdModulo3Route: AuthenticatedProyectoIdModulo3Route,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiPublicSeedAdminRoute: ApiPublicSeedAdminRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
