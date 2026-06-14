@@ -17,8 +17,6 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const DEMO_PWD = "123456";
-
 function AuthPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
