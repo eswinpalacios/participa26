@@ -56,7 +56,7 @@ function AuthPage() {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email: correo,
-      password: DEMO_PWD,
+      password: regPwd,
       options: {
         emailRedirectTo: window.location.origin,
         data: { nombre, apellidos, whatsapp, rol },
@@ -64,8 +64,8 @@ function AuthPage() {
     });
     setLoading(false);
     if (error) { toast.error(error.message); return; }
-    toast.success(`Registro exitoso. Tu contraseña es ${DEMO_PWD}`);
-    setEmail(correo); setPwd(DEMO_PWD);
+    toast.success("Registro exitoso. Revisa tu correo para confirmar la cuenta.");
+    setEmail(correo); setPwd(regPwd);
   };
 
   return (
