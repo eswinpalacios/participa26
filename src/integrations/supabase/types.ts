@@ -14,16 +14,276 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      categorias_oed: {
+        Row: {
+          codigo: string
+          descripcion: string
+        }
+        Insert: {
+          codigo: string
+          descripcion: string
+        }
+        Update: {
+          codigo?: string
+          descripcion?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          apellidos: string
+          correo: string
+          created_at: string
+          id: string
+          nombre: string
+          whatsapp: string | null
+        }
+        Insert: {
+          apellidos?: string
+          correo: string
+          created_at?: string
+          id: string
+          nombre?: string
+          whatsapp?: string | null
+        }
+        Update: {
+          apellidos?: string
+          correo?: string
+          created_at?: string
+          id?: string
+          nombre?: string
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      proyecto_archivos: {
+        Row: {
+          created_at: string
+          id: string
+          mime: string | null
+          proyecto_id: string
+          tipo: Database["public"]["Enums"]["archivo_tipo"]
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mime?: string | null
+          proyecto_id: string
+          tipo: Database["public"]["Enums"]["archivo_tipo"]
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mime?: string | null
+          proyecto_id?: string
+          tipo?: Database["public"]["Enums"]["archivo_tipo"]
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proyecto_archivos_proyecto_id_fkey"
+            columns: ["proyecto_id"]
+            isOneToOne: false
+            referencedRelation: "proyectos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proyecto_respuestas: {
+        Row: {
+          created_at: string
+          id: string
+          modulo: number
+          pregunta: string
+          proyecto_id: string
+          respuesta: Json
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          modulo: number
+          pregunta: string
+          proyecto_id: string
+          respuesta: Json
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          modulo?: number
+          pregunta?: string
+          proyecto_id?: string
+          respuesta?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proyecto_respuestas_proyecto_id_fkey"
+            columns: ["proyecto_id"]
+            isOneToOne: false
+            referencedRelation: "proyectos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      proyectos: {
+        Row: {
+          created_at: string
+          destacado: boolean
+          estado: number
+          id: string
+          oed_codigo: string | null
+          oed_justificacion: string | null
+          titulo: string
+          updated_at: string
+          usuario_id: string
+        }
+        Insert: {
+          created_at?: string
+          destacado?: boolean
+          estado?: number
+          id?: string
+          oed_codigo?: string | null
+          oed_justificacion?: string | null
+          titulo?: string
+          updated_at?: string
+          usuario_id: string
+        }
+        Update: {
+          created_at?: string
+          destacado?: boolean
+          estado?: number
+          id?: string
+          oed_codigo?: string | null
+          oed_justificacion?: string | null
+          titulo?: string
+          updated_at?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proyectos_oed_codigo_fkey"
+            columns: ["oed_codigo"]
+            isOneToOne: false
+            referencedRelation: "categorias_oed"
+            referencedColumns: ["codigo"]
+          },
+        ]
+      }
+      proyectos_historicos: {
+        Row: {
+          anio: number
+          created_at: string
+          id: string
+          monto: number
+          titulo: string
+        }
+        Insert: {
+          anio: number
+          created_at?: string
+          id?: string
+          monto?: number
+          titulo: string
+        }
+        Update: {
+          anio?: number
+          created_at?: string
+          id?: string
+          monto?: number
+          titulo?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      videos_youtube: {
+        Row: {
+          created_at: string
+          id: string
+          orden: number
+          titulo: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          orden?: number
+          titulo: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          orden?: number
+          titulo?: string
+          url?: string
+        }
+        Relationships: []
+      }
+      votos: {
+        Row: {
+          created_at: string
+          id: string
+          proyecto_id: string
+          usuario_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          proyecto_id: string
+          usuario_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          proyecto_id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votos_proyecto_id_fkey"
+            columns: ["proyecto_id"]
+            isOneToOne: false
+            referencedRelation: "proyectos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "agente" | "consulta"
+      archivo_tipo: "problema" | "referencia"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +410,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "agente", "consulta"],
+      archivo_tipo: ["problema", "referencia"],
+    },
   },
 } as const
