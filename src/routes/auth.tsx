@@ -17,8 +17,6 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const DEMO_PWD = "123456";
-
 function AuthPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -30,6 +28,7 @@ function AuthPage() {
   const [apellidos, setApellidos] = useState("");
   const [correo, setCorreo] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
+  const [regPwd, setRegPwd] = useState("");
   const [rol, setRol] = useState<"agente" | "consulta">("consulta");
 
   const ensureSeed = async () => {
@@ -55,7 +54,7 @@ function AuthPage() {
     setLoading(true);
     const { error } = await supabase.auth.signUp({
       email: correo,
-      password: DEMO_PWD,
+      password: regPwd,
       options: {
         emailRedirectTo: window.location.origin,
         data: { nombre, apellidos, whatsapp, rol },
@@ -63,8 +62,8 @@ function AuthPage() {
     });
     setLoading(false);
     if (error) { toast.error(error.message); return; }
-    toast.success(`Registro exitoso. Tu contraseña es ${DEMO_PWD}`);
-    setEmail(correo); setPwd(DEMO_PWD);
+    toast.success("Registro exitoso. Revisa tu correo para confirmar la cuenta.");
+    setEmail(correo); setPwd(regPwd);
   };
 
   return (
@@ -84,7 +83,6 @@ function AuthPage() {
               <div><Label>Correo</Label><Input type="email" required value={email} onChange={(e)=>setEmail(e.target.value)} /></div>
               <div><Label>Contraseña</Label><Input type="password" required value={pwd} onChange={(e)=>setPwd(e.target.value)} /></div>
               <Button type="submit" disabled={loading} className="w-full">Ingresar</Button>
-              <p className="text-xs text-muted-foreground text-center">Demo: usuarios usan contraseña <b>123456</b>. Admin: eswinxd@gmail.com / 199306</p>
             </form>
           </TabsContent>
           <TabsContent value="register">
@@ -94,6 +92,7 @@ function AuthPage() {
                 <div><Label>Apellidos</Label><Input required value={apellidos} onChange={(e)=>setApellidos(e.target.value)} /></div>
               </div>
               <div><Label>Correo</Label><Input type="email" required value={correo} onChange={(e)=>setCorreo(e.target.value)} /></div>
+              <div><Label>Contraseña</Label><Input type="password" required minLength={6} value={regPwd} onChange={(e)=>setRegPwd(e.target.value)} /></div>
               <div><Label>WhatsApp</Label><Input value={whatsapp} onChange={(e)=>setWhatsapp(e.target.value)} /></div>
               <div>
                 <Label>Tipo de usuario</Label>
@@ -109,7 +108,6 @@ function AuthPage() {
                 </RadioGroup>
               </div>
               <Button type="submit" disabled={loading} className="w-full">Registrar</Button>
-              <p className="text-xs text-muted-foreground text-center">La contraseña asignada será <b>123456</b>.</p>
             </form>
           </TabsContent>
         </Tabs>
