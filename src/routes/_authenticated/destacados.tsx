@@ -96,25 +96,17 @@ function Page() {
     queryFn: async () => {
       try {
         const { data: projs, error } = await supabase
-          .from("proyectos")
-          .select("id, titulo, oed_codigo, oed_justificacion, estado, created_at")
-          .eq("destacado", true)
+          .from("proyectos_votacion")
+          .select("id, titulo, votos, created_at")
           .order("created_at", { ascending: false });
         if (error) throw error;
         const projectList = projs ?? [];
         if (projectList.length === 0) return generateFallbackProjects();
 
-        const ids = projectList.map((p) => p.id);
-        const { data: votos } = await supabase
-          .from("votos")
-          .select("proyecto_id, usuario_id")
-          .in("proyecto_id", ids.length ? ids : ["00000000-0000-0000-0000-000000000000"]);
-        const counts: Record<string, number> = {};
-        (votos ?? []).forEach((v) => {
-          counts[v.proyecto_id] = (counts[v.proyecto_id] ?? 0) + 1;
-        });
-
-        return projectList.map((p) => ({ ...p, votos: counts[p.id] ?? 0 }));
+        return projectList.map((p) => ({
+          ...p,
+          votos: typeof p.votos === "number" ? p.votos : 0,
+        }));
       } catch (error) {
         console.error("Error cargando destacados:", error);
         return generateFallbackProjects();
@@ -132,9 +124,7 @@ function Page() {
           <TableHeader>
             <TableRow>
               <TableHead>Título</TableHead>
-              <TableHead>OED</TableHead>
               <TableHead>Votos</TableHead>
-              <TableHead>Estado</TableHead>
               <TableHead className="text-right">Acción</TableHead>
             </TableRow>
           </TableHeader>
@@ -143,11 +133,8 @@ function Page() {
               <TableRow key={p.id}>
                 <TableCell>
                   <div className="font-medium text-primary">{p.titulo}</div>
-                  {p.oed_justificacion && <div className="text-sm text-muted-foreground mt-1">{p.oed_justificacion}</div>}
                 </TableCell>
-                <TableCell>{p.oed_codigo ?? "—"}</TableCell>
                 <TableCell>{p.votos}</TableCell>
-                <TableCell>{p.estado}</TableCell>
                 <TableCell className="text-right">
                   <Button size="sm" variant="secondary">Votar</Button>
                 </TableCell>
