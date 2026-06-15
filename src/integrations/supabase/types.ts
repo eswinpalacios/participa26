@@ -194,6 +194,27 @@ export type Database = {
         }
         Relationships: []
       }
+      proyectos_votacion: {
+        Row: {
+          created_at: string
+          id: string
+          titulo: string
+          votos: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          titulo: string
+          votos?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          titulo?: string
+          votos?: number
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string
