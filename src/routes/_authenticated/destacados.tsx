@@ -87,10 +87,6 @@ export const Route = createFileRoute("/_authenticated/destacados")({
 });
 
 function Page() {
-  const qc = useQueryClient();
-  const { data: userRes } = useQuery({ queryKey: ["me"], queryFn: async () => (await supabase.auth.getUser()).data.user });
-  const userId = userRes?.id;
-
   const { data, isLoading } = useQuery({
     queryKey: ["destacados"],
     queryFn: async () => {
