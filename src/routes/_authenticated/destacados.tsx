@@ -1,10 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ArrowLeft, ThumbsUp, Check } from "lucide-react";
-import { toast } from "sonner";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { ArrowLeft } from "lucide-react";
 
 const SAMPLE_PROJECTS = [
   {
@@ -111,31 +110,17 @@ function Page() {
           .select("proyecto_id, usuario_id")
           .in("proyecto_id", ids.length ? ids : ["00000000-0000-0000-0000-000000000000"]);
         const counts: Record<string, number> = {};
-        const voted: Record<string, boolean> = {};
         (votos ?? []).forEach((v) => {
           counts[v.proyecto_id] = (counts[v.proyecto_id] ?? 0) + 1;
-          if (v.usuario_id === userId) voted[v.proyecto_id] = true;
         });
 
-        return projectList.map((p) => ({ ...p, votos: counts[p.id] ?? 0, yaVoto: !!voted[p.id] }));
+        return projectList.map((p) => ({ ...p, votos: counts[p.id] ?? 0 }));
       } catch (error) {
         console.error("Error cargando destacados:", error);
         return generateFallbackProjects();
       }
     },
   });
-
-  const vote = useMutation({
-    mutationFn: async (proyectoId: string) => {
-      if (!userId) throw new Error("Usuario no autenticado");
-      const { error } = await supabase.from("votos").insert({ proyecto_id: proyectoId, usuario_id: userId });
-      if (error) throw error;
-    },
-    onSuccess: () => { toast.success("¡Voto registrado!"); qc.invalidateQueries({ queryKey: ["destacados"] }); },
-    onError: (e: Error) => toast.error(e.message),
-  });
-
-  const isExampleData = data?.some((project) => isFallbackProject(project.id));
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
@@ -164,24 +149,11 @@ function Page() {
                 <TableCell>{p.votos}</TableCell>
                 <TableCell>{p.estado}</TableCell>
                 <TableCell className="text-right">
-                  <Button
-                    size="sm"
-                    disabled={isFallbackProject(p.id) || p.yaVoto || vote.isPending}
-                    onClick={() => vote.mutate(p.id)}
-                    className="gap-1"
-                  >
-                    {isFallbackProject(p.id)
-                      ? "Datos de ejemplo"
-                      : p.yaVoto
-                        ? <><Check className="w-4 h-4" /> Ya votaste</>
-                        : <><ThumbsUp className="w-4 h-4" /> Votar</>
-                    }
-                  </Button>
+                  <Button size="sm" variant="secondary">Votar</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
-          {isExampleData && <TableCaption>Si no hay proyectos destacados reales en la base de datos, se muestran ejemplos de mejoramiento para Miraflores.</TableCaption>}
         </Table>
       )}
     </div>
